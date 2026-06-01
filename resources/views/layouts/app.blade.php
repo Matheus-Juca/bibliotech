@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="csrf-token"
+          content="{{ csrf_token() }}">
 
     <title>Bibliotech JMPR</title>
 
@@ -15,39 +16,19 @@
         'resources/css/app.css',
         'resources/js/app.js'
     ])
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
 </head>
 
-<body class="bg-slate-50 font-[Inter]">
+<body class="bg-slate-100">
 
     <div class="flex min-h-screen">
 
-        {{-- Sidebar --}}
-        @include('components.sidebar')
+        @include('layouts.sidebar')
 
-        {{-- Conteúdo --}}
-        <div class="flex-1 flex flex-col">
+        <main class="flex-1 p-8 center">
 
-            {{-- Navbar --}}
-            @include('components.navbar')
+            @yield('content')
 
-            {{-- Conteúdo principal --}}
-            <main class="p-8">
-
-                @yield('content')
-
-            </main>
-
-        </div>
+        </main>
 
     </div>
 

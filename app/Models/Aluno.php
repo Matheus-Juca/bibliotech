@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aluno extends Model
 {
-    //
+    protected $fillable = [
+        'nome',
+        'matricula',
+        'turma',
+        'qtd_fardas',
+    ];
 }

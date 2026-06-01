@@ -13,7 +13,8 @@
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                >
+                    >
+        
 
                     <path
                         stroke-linecap="round"
@@ -28,6 +29,7 @@
                     />
 
                 </svg>
+
 
             </div>
 
@@ -51,28 +53,28 @@
     <nav class="space-y-2">
 
         <a
-            href="#"
+            href="{{ route('dashboard') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-blue-100 text-blue-900 shadow-sm font-medium transition"
         >
             Dashboard
         </a>
 
         <a
-            href="#"
+            href="{{ route('admin.livros') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
         >
             Livros
         </a>
 
         <a
-            href="#"
+            href="{{ route('admin.alunos') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
         >
             Alunos
         </a>
 
         <a
-            href="#"
+            href="{{ route('admin.emprestimos') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
         >
             Empréstimos
@@ -83,6 +85,14 @@
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
         >
             Relatórios
+        </a>
+
+
+        <a
+            href="#"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition color-red-600"
+        >
+            Sair
         </a>
 
     </nav>

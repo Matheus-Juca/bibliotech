@@ -1,71 +1,47 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Bibliotech JMPR</title>
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center px-4">
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-    <div class="grid lg:grid-cols-2 bg-white rounded-3xl shadow-xl overflow-hidden max-w-5xl w-full">
-
-        <div class="bg-blue-900 text-white p-12 flex flex-col justify-center">
-
-            <h1 class="text-4xl font-bold mb-4">
-                Bibliotech JMPR
-            </h1>
-
-            <p class="text-blue-200 text-lg leading-relaxed">
-                Tecnologia e organização para incentivar a leitura.
-            </p>
-
-            <div class="mt-10 text-sm text-blue-300">
-                EEMTI José Maria Pontes da Rocha
-            </div>
-
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="p-10 lg:p-14 flex flex-col justify-center">
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
 
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-slate-800">
-                    Entrar
-                </h2>
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
 
-                <p class="text-slate-500 mt-2">
-                    Acesse o sistema da biblioteca.
-                </p>
-            </div>
-
-            <form class="space-y-5">
-
-                <div>
-                    <label class="block mb-2 text-sm font-medium text-slate-700">
-                        E-mail
-                    </label>
-
-                    <x-input type="email" placeholder="Digite seu e-mail" />
-                </div>
-
-                <div>
-                    <label class="block mb-2 text-sm font-medium text-slate-700">
-                        Senha
-                    </label>
-
-                    <x-input type="password" placeholder="Digite sua senha" />
-                </div>
-
-                <x-button class="w-full justify-center">
-                    Entrar
-                </x-button>
-
-            </form>
-
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-    </div>
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            </label>
+        </div>
 
-</body>
-</html>
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+
+            <x-primary-button class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>

@@ -1,26 +1,151 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LivroController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AlunoController;
+use App\Models\Aluno;
+use App\Models\Livro;
+use App\Http\Controllers\EmprestimoController;
+use App\Http\Controllers\DashboardController;
+
+/*
+|--------------------------------------------------------------------------
+| Emprestimos
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/admin/emprestimos',
+    [EmprestimoController::class, 'store']
+)->name('emprestimos.store');
+
+/*
+|--------------------------------------------------------------------------
+| Página Inicial
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('main');
+})->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth'])->group(function () {
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
+
+
 });
 
-Route::get('/registro', function (){
-    return view('auth.register');
-})->name('register');
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+/*
+|--------------------------------------------------------------------------
+| Perfil do usuário (Breeze)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Administração
+|--------------------------------------------------------------------------
+*/
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Livros
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::get('/livros', [LivroController::class, 'index'])
+        ->name('admin.livros');
+
     
+    Route::get('/cadlivro', function () {
+        return view('admin.cadLivro');
+    })->name('admin.cadlivro');
+
+    Route::get('/admin/cadlivro', [LivroController::class, 'create'])
+        ->name('admin.cadlivro');
+
+    Route::post('/admin/cadlivro', [LivroController::class, 'store'])
+        ->name('livros.store');
+
+
+    Route::get('/livros/{livro}/edit', [LivroController::class, 'edit'])
+    ->name('livros.edit');
+
+    Route::put('/livros/{livro}', [LivroController::class, 'update'])
+        ->name('livros.update');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alunos
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/alunos', [AlunoController::class, 'index'])
+    ->name('admin.alunos');
+
+    Route::get('/cadaluno', function () {
+        return view('admin.cadAluno');
+    })->name('admin.cadaluno');
+
+    Route::get('/admin/cadaluno', [AlunoController::class, 'create'])
+    ->name('admin.cadaluno');
+
+        
+    Route::post('/admin/cadaluno', [AlunoController::class, 'store'])
+    ->name('alunos.store');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Empréstimos
+    |--------------------------------------------------------------------------
+    */
+
+Route::get('/emprestimos', [EmprestimoController::class, 'index'])
+    ->name('admin.emprestimos');
+
+    Route::get('/cademprestimo', function () {
+        return view('admin.cadEmprestimo');
+    })->name('admin.cademprestimo');
 });
 
-Route::get('/dashboard', function () {
-    return view('layouts.dashboard');
-})->name('dashboard');
+
+Route::put(
+    '/emprestimos/{id}/devolver',
+    [EmprestimoController::class, 'devolver']
+)->name('emprestimos.devolver');
+
+/*
+|--------------------------------------------------------------------------
+| Breeze Auth
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__.'/auth.php';

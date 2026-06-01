@@ -2,15 +2,22 @@
 
 @section('content')
 
+
 <div class="flex gap-3 mb-8">
 
-    <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 rounded-xl">
-        + Novo Livro
-    </button>
+<a 
+    href="{{ route('admin.cadlivro') }}"
+    class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 rounded-xl"
+>
+    + Novo Livro
+</a>
 
-    <button class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl">
-        + Novo Empréstimo
-    </button>
+<button
+    id="btnEmprestimo"
+    class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 rounded-xl"
+>
+    + Novo Empréstimo
+</button>
 
 </div>
     <!-- Cabeçalho -->
@@ -20,6 +27,7 @@
             <a href="{{ route('dashboard') }}"
                class="hover:text-blue-600 transition-colors duration-200">
                 Dashboard
+            </a>
         </h1>
 
         <p class="text-slate-500 mt-2">
@@ -42,7 +50,7 @@
                     </p>
 
                     <h2 class="text-4xl font-bold text-blue-900 mt-2">
-                        320
+                        {{ $totalLivros }}
                     </h2>
                 </div>
 
@@ -82,7 +90,7 @@
                     </p>
 
                     <h2 class="text-4xl font-bold text-green-600 mt-2">
-                        48
+                        {{ $emprestimosAtivos }}
                     </h2>
                 </div>
 
@@ -120,7 +128,7 @@
                     </p>
 
                     <h2 class="text-4xl font-bold text-slate-800 mt-2">
-                        210
+                       {{ $totalAlunos }}
                     </h2>
                 </div>
 
@@ -147,11 +155,11 @@
 
         </div>
 
-        <!-- Categorias -->
+        <!-- Categorias --->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-
+            
             <div class="flex items-center justify-between mb-4">
-
+                
                 <div>
                     <p class="text-slate-500 text-sm">
                         Categorias
@@ -161,27 +169,27 @@
                         12
                     </h2>
                 </div>
-
+                
                 <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center">
-
+                    
                     <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-7 h-7 text-blue-700"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 11H5m14-4H5m14
-                                 8H5m14 4H5" />
-                    </svg>
-
-                </div>
-
+                    class="w-7 h-7 text-blue-700"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    
+                    <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 11H5m14-4H5m14
+                    8H5m14 4H5" />
+                </svg>
+                
             </div>
-
+            
         </div>
+        
+    </div>
 
     </div>
 
@@ -229,59 +237,47 @@
 
                     <tbody>
 
+                        @foreach($ultimosEmprestimos as $emprestimo)
+
                         <tr class="border-t border-slate-100">
 
                             <td class="px-6 py-4 text-slate-700">
-                                Maria Eduarda
+                                {{ $emprestimo->aluno->nome }}
                             </td>
 
                             <td class="px-6 py-4 text-slate-700">
-                                Dom Casmurro
+                                {{ $emprestimo->livro->titulo }}
                             </td>
 
                             <td class="px-6 py-4 text-slate-500">
-                                26/05/2026
+                                {{ \Carbon\Carbon::parse($emprestimo->data_emprestimo)->format('d/m/Y') }}
                             </td>
 
                             <td class="px-6 py-4">
 
-                                <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
-                                    Emprestado
-                                </span>
+                                @if($emprestimo->status == 'emprestado')
+
+                                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                        Emprestado
+                                    </span>
+
+                                @else
+
+                                    <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                        Devolvido
+                                    </span>
+
+                                @endif
 
                             </td>
 
                         </tr>
 
-                        <tr class="border-t border-slate-100">
+                        @endforeach
 
-                            <td class="px-6 py-4 text-slate-700">
-                                João Victor
-                            </td>
+                        </tbody>
 
-                            <td class="px-6 py-4 text-slate-700">
-                                O Pequeno Príncipe
-                            </td>
-
-                            <td class="px-6 py-4 text-slate-500">
-                                25/05/2026
-                            </td>
-
-                            <td class="px-6 py-4">
-
-                                <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">
-                                    Devolvido
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
+                 </table>
 
         </div>
 
@@ -325,7 +321,7 @@
                     </p>
 
                     <h3 class="font-semibold text-green-700">
-                        272 livros
+                        {{ $totalExemplares }} livros
                     </h3>
 
                 </div>
@@ -334,6 +330,147 @@
 
         </div>
 
+
     </div>
+
+
+    <div
+    id="modalEmprestimo"
+    class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+>
+
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6">
+
+        <div class="flex justify-between items-center mb-6">
+
+            <h2 class="text-xl font-bold">
+                Novo Empréstimo
+            </h2>
+
+            <button id="fecharModal">
+                ✕
+            </button>
+
+        </div>
+
+        <form action="{{ route('emprestimos.store') }}" method="POST">
+
+            @csrf
+
+            <!-- Aluno -->
+            <div class="mb-4">
+
+                <label class="block mb-2 font-medium">
+                    Aluno
+                </label>
+
+                <select
+                    name="aluno_id"
+                    class="w-full border rounded-lg p-3"
+                    required
+                >
+
+                    <option value="">
+                        Selecione um aluno
+                    </option>
+
+                    @foreach($alunos as $aluno)
+                        <option value="{{ $aluno->id }}">
+                            {{ $aluno->nome }}
+                        </option>
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <!-- Livro -->
+            <div class="mb-4">
+
+                <label class="block mb-2 font-medium">
+                    Livro
+                </label>
+
+                <select
+                    name="livro_id"
+                    class="w-full border rounded-lg p-3"
+                    required
+                >
+
+                    <option value="">
+                        Selecione um livro
+                    </option>
+
+                    @foreach($livros as $livro)
+                        <option value="{{ $livro->id }}">
+                            {{ $livro->titulo }}
+                        </option>
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <!-- Data -->
+            <div class="mb-4">
+
+                <label class="block mb-2 font-medium">
+                    Data de devolução
+                </label>
+
+                <input
+                    type="date"
+                    name="data_devolucao"
+                    class="w-full border rounded-lg p-3"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-blue-700 text-white py-3 rounded-xl"
+            >
+                Registrar Empréstimo
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const modal = document.getElementById('modalEmprestimo');
+
+    document
+        .getElementById('btnEmprestimo')
+        .addEventListener('click', () => {
+
+            modal.classList.remove('hidden');
+
+        });
+
+    document
+        .getElementById('fecharModal')
+        .addEventListener('click', () => {
+
+            modal.classList.add('hidden');
+
+        });
+
+    modal.addEventListener('click', (e) => {
+
+        if(e.target === modal){
+
+            modal.classList.add('hidden');
+
+        }
+
+    });
+
+    </script>
 
     @endsection
