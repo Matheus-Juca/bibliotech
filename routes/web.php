@@ -27,7 +27,7 @@ Route::post(
 */
 
 Route::get('/', function () {
-    return view('main');
+    return view('auth.login');
 })->name('home');
 
 /*
