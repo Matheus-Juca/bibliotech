@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('autor');
             $table->string('editora');
-            $table->integer('qtd_disponivel');
+            $table->integer('qtd_disponivel');  // Quantidade total de livros disponíveis por titulo.
+            $table->string('codigo_lv')->unique(); // Código para identificação de cada livro
             $table->timestamps();
 
         });

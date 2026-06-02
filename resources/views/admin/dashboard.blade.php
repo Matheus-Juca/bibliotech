@@ -358,59 +358,70 @@
             @csrf
 
             <!-- Aluno -->
-            <div class="mb-4">
+                    <div class="mb-4">
 
-                <label class="block mb-2 font-medium">
-                    Aluno
-                </label>
+                        <label class="block mb-2 font-medium">
+                            Aluno
+                        </label>
 
-                <select
-                    name="aluno_id"
-                    class="w-full border rounded-lg p-3"
-                    required
-                >
+                        <input
+                            type="text"
+                            id="buscarAluno"
+                            placeholder="Digite nome ou matrícula..."
+                            class="w-full border rounded-lg p-3 mb-2"
+                        > <br> <br>  
 
-                    <option value="">
-                        Selecione um aluno
-                    </option>
+                        <select
+                            id="selectAluno"
+                            name="aluno_id"
+                            class="w-full border rounded-lg p-3"
+                            required
+                        >
 
-                    @foreach($alunos as $aluno)
-                        <option value="{{ $aluno->id }}">
-                            {{ $aluno->nome }}
-                        </option>
-                    @endforeach
+                            <option value="">Selecione um aluno</option>
 
-                </select>
+                            @foreach($alunos as $aluno)
+                                <option value="{{ $aluno->id }}">
+                                    {{ $aluno->nome }} - {{ $aluno->matricula }}
+                                </option>
+                            @endforeach
 
-            </div>
+                        </select>
+
+                    </div>
 
             <!-- Livro -->
-            <div class="mb-4">
+                    <div class="mb-4">
 
-                <label class="block mb-2 font-medium">
-                    Livro
-                </label>
+                        <label class="block mb-2 font-medium">
+                            Livro
+                        </label>
 
-                <select
-                    name="livro_id"
-                    class="w-full border rounded-lg p-3"
-                    required
-                >
+                        <input
+                            type="text"
+                            id="buscarLivro"
+                            placeholder="Digite título ou código..."
+                            class="w-full border rounded-lg p-3 mb-2"
+                        > <br> <br>
 
-                    <option value="">
-                        Selecione um livro
-                    </option>
+                        <select
+                            id="selectLivro"
+                            name="livro_id"
+                            class="w-full border rounded-lg p-3"
+                            required
+                        >
 
-                    @foreach($livros as $livro)
-                        <option value="{{ $livro->id }}">
-                            {{ $livro->titulo }}
-                        </option>
-                    @endforeach
+                            <option value="">Selecione um livro</option>
 
-                </select>
+                            @foreach($livros as $livro)
+                                <option value="{{ $livro->id }}">
+                                    {{ $livro->titulo }}
+                                </option>
+                            @endforeach
 
-            </div>
+                        </select>
 
+                    </div>
             <!-- Data -->
             <div class="mb-4">
 
@@ -440,37 +451,88 @@
 
 </div>
 
-
 <script>
 
-    const modal = document.getElementById('modalEmprestimo');
+// =========================
+// MODAL DE EMPRÉSTIMO
+// =========================
 
-    document
-        .getElementById('btnEmprestimo')
-        .addEventListener('click', () => {
+const modal = document.getElementById('modalEmprestimo');
 
-            modal.classList.remove('hidden');
+document
+    .getElementById('btnEmprestimo')
+    .addEventListener('click', () => {
 
-        });
-
-    document
-        .getElementById('fecharModal')
-        .addEventListener('click', () => {
-
-            modal.classList.add('hidden');
-
-        });
-
-    modal.addEventListener('click', (e) => {
-
-        if(e.target === modal){
-
-            modal.classList.add('hidden');
-
-        }
+        modal.classList.remove('hidden');
 
     });
 
-    </script>
+document
+    .getElementById('fecharModal')
+    .addEventListener('click', () => {
+
+        modal.classList.add('hidden');
+
+    });
+
+modal.addEventListener('click', (e) => {
+
+    if(e.target === modal){
+
+        modal.classList.add('hidden');
+
+    }
+
+});
+
+
+// =========================
+// BUSCA DE ALUNOS
+// =========================
+
+document
+    .getElementById('buscarAluno')
+    .addEventListener('keyup', function() {
+
+        let filtro = this.value.toLowerCase();
+
+        document
+            .querySelectorAll('#selectAluno option')
+            .forEach(option => {
+
+                option.hidden =
+                    !option.textContent
+                        .toLowerCase()
+                        .includes(filtro);
+
+            });
+
+    });
+
+
+// =========================
+// BUSCA DE LIVROS
+// =========================
+
+document
+    .getElementById('buscarLivro')
+    .addEventListener('keyup', function() {
+
+        let filtro = this.value.toLowerCase();
+
+        document
+            .querySelectorAll('#selectLivro option')
+            .forEach(option => {
+
+                option.hidden =
+                    !option.textContent
+                        .toLowerCase()
+                        .includes(filtro);
+
+            });
+
+    });
+
+</script>
 
     @endsection
