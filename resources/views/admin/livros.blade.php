@@ -46,7 +46,7 @@
                     <tr>
 
                         <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
-                            ID
+                            Código
                         </th>
 
                         <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
@@ -80,7 +80,7 @@
                         <tr class="hover:bg-slate-50 transition">
 
                             <td class="px-6 py-4 text-sm text-slate-700">
-                                #{{ $livro->id }}
+                                {{ $livro->codigo }}
                             </td>
 
                             <td class="px-6 py-4 text-sm font-medium text-slate-800">

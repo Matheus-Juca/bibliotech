@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('livros', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique(); // Código para identificação de cada livro
             $table->string('titulo');
             $table->string('autor');
             $table->string('editora');
             $table->integer('qtd_disponivel');  // Quantidade total de livros disponíveis por titulo.
-            $table->string('codigo_lv')->unique(); // Código para identificação de cada livro
             $table->timestamps();
 
         });

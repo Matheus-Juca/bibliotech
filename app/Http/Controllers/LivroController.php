@@ -30,26 +30,34 @@ class LivroController extends Controller
         return view('admin.cadLivro');
     }
 
+
     public function store(Request $request)
     {
-        $request->validate([
-            'titulo' => 'required|max:255',
-            'autor' => 'required',
-            'editora' => 'required',
-            'quantidade' => 'required|integer|min:1'
-        ]);
+        $ultimoLivro = Livro::latest('id')->first();
+
+        $proximoNumero = $ultimoLivro
+            ? $ultimoLivro->id + 1
+            : 1;
+
+        $codigo = 'JMPR-' . str_pad(
+            $proximoNumero,
+            4,
+            '0',
+            STR_PAD_LEFT
+        );
 
         Livro::create([
-            'titulo' => $request->input('titulo'),
-            'autor' => $request->input('autor'),
-            'editora' => $request->input('editora'),
-            'qtd_disponivel' => $request->input('quantidade')
+            'codigo' => $codigo,
+            'titulo' => $request->titulo,
+            'autor' => $request->autor,
+            'editora' => $request->editora,
+            'qtd_disponivel' => $request->quantidade,
         ]);
 
-
-        return redirect()->route('admin.livros')->with('success', 'Livro cadastrado com sucesso!');
+        return redirect()
+            ->route('admin.livros')
+            ->with('success', 'Livro cadastrado.');
     }
-
     public function edit(Livro $livro)
         {
             return view('admin.editLivro', compact('livro'));

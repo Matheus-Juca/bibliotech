@@ -415,7 +415,7 @@
 
                             @foreach($livros as $livro)
                                 <option value="{{ $livro->id }}">
-                                    {{ $livro->titulo }}
+                                    {{ $livro->titulo }} - {{ $livro->codigo }}
                                 </option>
                             @endforeach
 
