@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alunos', function (Blueprint $table) {
+        Schema::create('turmas', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->unique();
             $table->string('nome');
-            $table->integer('matricula')->unique();
-            $table->string('turma');
-            $table->integer('qtd_fardas')->default(0);
+            $table->enum('turno', ['integral', 'noite']);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alunos');
+        Schema::dropIfExists('turmas');
     }
 };

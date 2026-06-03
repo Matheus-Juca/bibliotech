@@ -4,10 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AlunoController;
-use App\Models\Aluno;
-use App\Models\Livro;
 use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TurmaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,10 +110,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/alunos', [AlunoController::class, 'index'])
     ->name('admin.alunos');
 
-    Route::get('/cadaluno', function () {
-        return view('admin.cadAluno');
-    })->name('admin.cadaluno');
-
     Route::get('/admin/cadaluno', [AlunoController::class, 'create'])
     ->name('admin.cadaluno');
 
@@ -141,6 +136,18 @@ Route::put(
     '/emprestimos/{id}/devolver',
     [EmprestimoController::class, 'devolver']
 )->name('emprestimos.devolver');
+
+/*
+|--------------------------------------------------------------------------
+| Turmas
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('turmas', TurmaController::class);
+Route::get('/turmas', [TurmaController::class, 'index'])->name('admin.turmas');
+
+
+
 
 /*
 |--------------------------------------------------------------------------

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('codigo')->unique(); // Código para identificação de cada livro
             $table->string('titulo');
             $table->string('autor');
-            $table->string('editora');
+            $table->date('tombamento');
+            $table->string('categoria')->nullable();
             $table->integer('qtd_disponivel');  // Quantidade total de livros disponíveis por titulo.
+            $table->integer('qtd_total');
             $table->timestamps();
 
         });

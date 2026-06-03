@@ -36,12 +36,13 @@
 
                     <tr>
 
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
-                            ID
-                        </th>
-
+                        
                         <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
                             Aluno
+                        </th>
+                        
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
+                            Turma
                         </th>
 
                         <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
@@ -74,12 +75,13 @@
 
                     <tr class="border-t border-slate-100 hover:bg-slate-50 transition">
 
-                        <td class="px-6 py-4 text-slate-700">
-                            #{{ $emprestimo->id }}
-                        </td>
-
+                        
                         <td class="px-6 py-4 font-medium text-slate-800">
                             {{ $emprestimo->aluno->nome }}
+                        </td>
+
+                        <td class="px-6 py-4 text-slate-700">
+                            {{ $emprestimo->aluno->turma->nome }}
                         </td>
 
                         <td class="px-6 py-4 text-slate-700">

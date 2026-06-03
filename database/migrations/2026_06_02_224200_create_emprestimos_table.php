@@ -23,11 +23,9 @@ return new class extends Migration
                 
             $table->date('data_emprestimo');
             $table->date('data_devolucao')->nullable();
-            $table->enum('status', 
-            [
-                'emprestado', 'devolvido'
-                ])
+            $table->enum('status', ['emprestado', 'devolvido', 'atrasado'])
             ->default('emprestado');
+            $table->string('observacoes')->nullable();
             $table->timestamps();
         });
     }

@@ -119,7 +119,7 @@
                         </td>
 
                         <td class="px-6 py-4 text-center text-sm text-slate-700">
-                            {{ $aluno->turma }}
+                            {{ $aluno->turma->nome }}
                         </td>
 
                     </tr>

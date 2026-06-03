@@ -9,7 +9,12 @@ class Aluno extends Model
     protected $fillable = [
         'nome',
         'matricula',
-        'turma',
+        'turma_id',
         'qtd_fardas',
     ];
+
+    public function turma()
+{
+    return $this->belongsTo(Turma::class);
+}
 }

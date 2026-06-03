@@ -74,7 +74,7 @@
 
                 <select
                     id="turma"
-                    name="turma"
+                    name="turma_id"
                     required
                     class="w-full rounded-xl border border-slate-300 px-4 py-3
                            focus:outline-none focus:ring-2 focus:ring-green-400
@@ -83,62 +83,12 @@
                     <option value="">
                         Selecione uma turma
                     </option>
-
-                    <option value=" 1º Ano - Turma A">
-                        1º Ano - Turma A
+                        @foreach($turmas as $turma)
+                    <option value="{{ $turma->id }}">
+                        {{ $turma->nome }} ({{ $turma->codigo }})
                     </option>
-
-                    <option value=" 1º Ano - Turma B">
-                        1º Ano - Turma B
-                    </option>
-
-                    <option value=" 1º Ano - Turma C">
-                        1º Ano - Turma C
-                    </option>
-
-                    <option value=" 1º Ano - Turma D">
-                        1º Ano - Turma D
-                    </option>
-
-                    <option value=" 1º Ano - Turma E">
-                        1º Ano - Turma E
-                    </option>
-
-                    <option value="2º Ano - Turma A">
-                        2º Ano - Turma A
-                    </option>
-
-                    <option value="2º Ano - Turma B">
-                        2º Ano - Turma B
-                    </option>
-
-                    <option value="2º Ano - Turma C">
-                        2º Ano - Turma C
-                    </option>
-
-                    <option value="2º Ano - Turma D">
-                        2º Ano - Turma D
-                    </option>
-
-                    <option value="2º Ano - Turma E">
-                        2º Ano - Turma E
-                    </option>
-
-                    <option value="3º Ano - Turma A">
-                        3º Ano - Turma A
-                    </option>
-
-                    <option value="3º Ano - Turma B">
-                        3º Ano - Turma B
-                    </option>
-
-                    <option value="3º Ano - Turma C">
-                        3º Ano - Turma C
-                    </option>
-
-                    <option value="3º Ano - Turma D">
-                        3º Ano - Turma D
-                    </option>
+                        @endforeach
+            
                     
                 </select>
             </div>

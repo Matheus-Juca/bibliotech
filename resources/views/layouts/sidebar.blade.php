@@ -74,6 +74,14 @@
         </a>
 
         <a
+            href="{{ route('admin.turmas') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
+        >
+            Turmas
+        </a>
+
+
+        <a
             href="{{ route('admin.emprestimos') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
         >

@@ -11,6 +11,7 @@ class Emprestimo extends Model
         'livro_id',
         'data_emprestimo',
         'data_devolucao',
+        'observacoes',
         'status'
     ];
 

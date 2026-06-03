@@ -10,7 +10,9 @@ class Livro extends Model
         'codigo',
         'titulo',
         'autor',
-        'editora',
+        'tombamento',
+        'categoria',
         'qtd_disponivel',
+        'qtd_total',
     ];
 }

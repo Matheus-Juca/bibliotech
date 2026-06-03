@@ -55,6 +55,7 @@ class EmprestimoController extends Controller
 {
     $emprestimo = Emprestimo::findOrFail($id);
 
+    
     if ($emprestimo->status == 'devolvido') {
         return back();
     }

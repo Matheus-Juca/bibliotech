@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use App\Models\Turma;
 
 class AlunoController extends Controller
 {
@@ -24,24 +25,25 @@ public function index(Request $request)
     return view('admin.alunos', compact('alunos'));
 }
 
-    public function create(){
+    public function create()
+    {
+        $turmas = Turma::all();
 
-        return view('admin.cadAluno');
+        return view('admin.cadAluno', compact('turmas'));
     }
-
     public function store(Request $request){
-
+        
         $request->validate([
             'nome' => 'required|max:255',
             'matricula' => 'required|unique:alunos,matricula',
-            'turma' => 'required',
+            'turma_id' => 'required|exists:turmas,id',
             'qtd_fardas' => 'required|integer|min:0'
         ]);
 
         Aluno::create([
             'nome' => $request->input('nome'),
             'matricula' => $request->input('matricula'),
-            'turma' => $request->input('turma'),
+            'turma_id' => $request->input('turma_id'),
             'qtd_fardas' => $request->input('qtd_fardas')
         ]);
 

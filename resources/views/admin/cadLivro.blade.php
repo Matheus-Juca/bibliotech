@@ -92,34 +92,108 @@
             {{-- Editora --}}
             <div>
                 <label 
-                    for="editora"
+                    for="categoria"
                     class="block text-sm font-semibold text-slate-700 mb-2"
                 >
-                    Editora
+                    Categoria
                 </label>
 
                 <select
-                    id="editora"
-                    name="editora"
+                    id="categoria"
+                    name="categoria"
                     required
                     class="w-full rounded-xl border border-slate-300 px-4 py-3
                            focus:outline-none focus:ring-2 focus:ring-green-400
                            focus:border-green-400 transition"
                 >
                     <option value="">
-                        Selecione uma editora
+                        Selecione uma categoria
                     </option>
 
-                    <option value="Moderna">
-                        Moderna
+                    <option value="Literatura Brasileira">
+                        Literatura brasileira
                     </option>
 
-                    <option value="Ática">
-                        Ática
+                    <option value="Literatura cearence">
+                        Literatura cearence
                     </option>
+
+                    <option value="Literatura Africana">
+                        Literatura africana 
+                    </option>
+
+                    <option value="Literatura portuguesa">
+                        Literatura portuguesa
+                    </option>
+
+                    <option value="Literatura estrangeira">
+                        Literatura estrangeira 
+                    </option>
+                    <option value="Dicionarios">
+                        Dicionários
+                    </option>
+
+                    <option value="Infanto juvenil">
+                        Infanto juvenil
+                    </option>
+
+                    
+                    <option value="História do Brasil">
+                        História do Brasil
+                    </option>
+                    
+                    <option value="História do Ceará">
+                        História do Ceará
+                    </option>
+
+                    <option value="Crônicas e contos">
+                        Crônicas e contos
+                    </option>
+
+
+                    <option value="Romance">
+                        Romance
+                    </option>
+
+                    <option value="Novela">
+                        Novela
+                    </option>
+
+                    <option value="Cordel">
+                        Cordel
+                    </option>
+
+                    <option value="Teatro">
+                        Teatro
+                    </option>
+
+                    <option value="Poesia">
+                        Poesia
+                    </option>
+
                 </select>
             </div>
 
+                {{-- Tombamento --}}
+                <div>
+                    <label 
+                        for="tombamento"
+                        class="block text-sm font-semibold text-slate-700 mb-2"
+                    >
+                        Número de Tombamento
+                    </label>
+    
+                    <input
+                        type="date"
+                        id="tombamento"
+                        name="tombamento" 
+                        placeholder="Digite o número de tombamento do livro"
+                        required
+                        class="w-full rounded-xl border border-slate-300 px-4 py-3
+                            focus:outline-none focus:ring-2 focus:ring-blue-400
+                            focus:border-blue-400 transition"
+                    > <br>
+                </div>
             {{-- Quantidade --}}
             <div>
                 <label 

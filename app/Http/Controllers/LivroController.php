@@ -50,8 +50,10 @@ class LivroController extends Controller
             'codigo' => $codigo,
             'titulo' => $request->titulo,
             'autor' => $request->autor,
-            'editora' => $request->editora,
+            'tombamento' => $request->tombamento,
+            'categoria' => $request->categoria,
             'qtd_disponivel' => $request->quantidade,
+            'qtd_total' => $request->quantidade,
         ]);
 
         return redirect()
@@ -68,15 +70,18 @@ class LivroController extends Controller
             $request->validate([
                 'titulo' => 'required|max:255',
                 'autor' => 'required',
-                'editora' => 'required',
+                'tombamento' => 'required',
+                'categoria' => 'required',
                 'quantidade' => 'required|integer|min:0'
             ]);
 
             $livro->update([
                 'titulo' => $request->titulo,
                 'autor' => $request->autor,
-                'editora' => $request->editora,
+                'tombamento' => $request->tombamento,
+                'categoria' => $request->categoria,
                 'qtd_disponivel' => $request->quantidade,
+                'qtd_total' => $request->quantidade,
             ]);
 
             return redirect()
