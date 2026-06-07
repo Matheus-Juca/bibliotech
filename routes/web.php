@@ -7,6 +7,7 @@ use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ Route::post(
     [EmprestimoController::class, 'store']
 )->name('emprestimos.store');
 
+Route::put(
+    '/emprestimos/{id}/nao-devolvido',
+    [EmprestimoController::class, 'naoDevolvido']
+)->name('emprestimos.naoDevolvido');
 /*
 |--------------------------------------------------------------------------
 | Página Inicial
@@ -147,7 +152,19 @@ Route::resource('turmas', TurmaController::class);
 Route::get('/turmas', [TurmaController::class, 'index'])->name('admin.turmas');
 
 
+/*
+|--------------------------------------------------------------------------
+| Relatórios
+|--------------------------------------------------------------------------
+*/
 
+Route::get('/relatorios', [RelatorioController::class, 'index'])
+    ->name('admin.relatorio');
+
+Route::get(
+    '/relatorios/pdf',
+    [RelatorioController::class, 'gerarPdf']
+)->name('relatorios.pdf');
 
 /*
 |--------------------------------------------------------------------------

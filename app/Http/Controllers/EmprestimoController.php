@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emprestimo;
 use App\Models\Livro;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EmprestimoController extends Controller
 {
@@ -12,6 +13,8 @@ class EmprestimoController extends Controller
 
     public function index()
     {
+
+
         $emprestimos = Emprestimo::with(['aluno', 'livro'])
             ->orderBy('data_emprestimo', 'desc')
             ->paginate(10);
@@ -51,24 +54,43 @@ class EmprestimoController extends Controller
             ->with('success', 'Empréstimo registrado com sucesso!');
     }
 
-    public function devolver($id)
-{
-    $emprestimo = Emprestimo::findOrFail($id);
+        public function devolver($id)
+    {
+        $emprestimo = Emprestimo::findOrFail($id);
 
-    
-    if ($emprestimo->status == 'devolvido') {
-        return back();
+        
+        if ($emprestimo->status == 'devolvido') {
+            return back();
+        }
+
+        $emprestimo->update([
+            'status' => 'devolvido'
+        ]);
+
+        $emprestimo->livro->increment('qtd_disponivel');
+
+        return back()->with(
+            'success',
+            'Livro devolvido com sucesso!'
+        );
     }
 
-    $emprestimo->update([
-        'status' => 'devolvido'
-    ]);
+    public function naoDevolvido(Request $request, $id)
+    {
+        $request->validate([
+            'motivo_nao_devolucao' => 'required|string|max:500'
+        ]);
 
-    $emprestimo->livro->increment('qtd_disponivel');
+        $emprestimo = Emprestimo::findOrFail($id);
 
-    return back()->with(
-        'success',
-        'Livro devolvido com sucesso!'
-    );
-}
+        $emprestimo->update([
+            'status' => 'nao_devolvido',
+            'motivo_nao_devolucao' => $request->motivo_nao_devolucao
+        ]);
+
+        return back()->with(
+            'success',
+            'Livro marcado como não devolvido.'
+        );
+    }
 }

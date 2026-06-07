@@ -98,25 +98,38 @@
 
                         <td class="px-6 py-4 text-center">
 
-                            @if($emprestimo->status == 'emprestado')
+                        @if($emprestimo->status_exibicao == 'atrasado')
 
-                                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
-                                    Emprestado
-                                </span>
+                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">
+                                Em atraso
+                            </span>
 
-                            @else
+                        @elseif($emprestimo->status_exibicao == 'emprestado')
 
-                                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
-                                    Devolvido
-                                </span>
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                                Emprestado
+                            </span>
 
-                            @endif
+                        @elseif($emprestimo->status_exibicao == 'devolvido')
+
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                Devolvido
+                            </span>
+
+                        @elseif($emprestimo->status_exibicao == 'nao_devolvido')
+
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
+                                Não devolvido
+                            </span>
+
+                        @endif
 
                         </td>
 
                         <td class="px-6 py-4 text-center">
 
-                            @if($emprestimo->status == 'emprestado')
+                            @if( $emprestimo->status == 'emprestado'
+                                 || $emprestimo->status_exibicao == 'atrasado')
 
                                 <form
                                     action="{{ route('emprestimos.devolver', $emprestimo->id) }}"
@@ -132,6 +145,13 @@
                                         Devolver
                                     </button>
 
+                                    <button
+                                        type="button"
+                                        onclick="abrirModal({{ $emprestimo->id }})"
+                                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm"
+                                    >
+                                        Não devolvido
+                                    </button>
                                 </form>
 
                             @else
@@ -172,5 +192,87 @@
     </div>
 
 </div>
+
+<div
+    id="modalNaoDevolvido"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center"
+>
+
+    <div class="bg-white rounded-xl p-6 w-full max-w-md">
+
+        <h3 class="text-lg font-semibold mb-4">
+            Motivo da não devolução
+        </h3>
+
+        <form
+            id="formNaoDevolvido"
+            method="POST"
+        >
+
+            @csrf
+            @method('PUT')
+
+            <textarea
+                name="motivo_nao_devolucao"
+                rows="4"
+                required
+                class="w-full border rounded-lg p-3"
+            ></textarea>
+
+            <div class="flex justify-end gap-2 mt-4">
+
+                <button
+                    type="button"
+                    onclick="fecharModal()"
+                    class="px-4 py-2 border rounded-lg"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="bg-red-600 text-white px-4 py-2 rounded-lg"
+                >
+                    Confirmar
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function abrirModal(id)
+{
+    document
+        .getElementById('modalNaoDevolvido')
+        .classList.remove('hidden');
+
+    document
+        .getElementById('modalNaoDevolvido')
+        .classList.add('flex');
+
+    document
+        .getElementById('formNaoDevolvido')
+        .action = `/emprestimos/${id}/nao-devolvido`;
+}
+
+function fecharModal()
+{
+    document
+        .getElementById('modalNaoDevolvido')
+        .classList.add('hidden');
+
+    document
+        .getElementById('modalNaoDevolvido')
+        .classList.remove('flex');
+}
+
+</script>
 
 @endsection

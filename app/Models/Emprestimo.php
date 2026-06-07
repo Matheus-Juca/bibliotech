@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Emprestimo extends Model
@@ -12,7 +13,8 @@ class Emprestimo extends Model
         'data_emprestimo',
         'data_devolucao',
         'observacoes',
-        'status'
+        'motivo_nao_devolucao',
+        'status',
     ];
 
     public function aluno()
@@ -23,5 +25,19 @@ class Emprestimo extends Model
     public function livro()
     {
         return $this->belongsTo(Livro::class);
+    }
+
+    public function getStatusExibicaoAttribute()
+    {
+        if (
+            $this->status === 'emprestado' &&
+            Carbon::today()->gt(
+                Carbon::parse($this->data_devolucao)
+            )
+        ) {
+            return 'atrasado';
+        }
+
+        return $this->status;
     }
 }

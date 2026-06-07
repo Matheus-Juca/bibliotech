@@ -9,7 +9,9 @@ class TurmaController extends Controller
 {
     public function index()
     {
-        $turmas = Turma::all();
+        $turmas = Turma::orderBy('nome')
+            ->paginate(10);
+
         return view('admin.turmas', compact('turmas'));
     }
 
@@ -32,7 +34,7 @@ class TurmaController extends Controller
         $request->validate([
             'codigo' => 'required|unique:turmas,codigo,' . $id,
             'nome'   => 'required',
-            'turno'  => 'required|in:manhã,tarde,noite'
+            'turno'  => 'required|in:integral,noite'
         ]);
 
         $turma = Turma::findOrFail($id);

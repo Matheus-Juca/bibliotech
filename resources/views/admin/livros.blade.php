@@ -58,7 +58,7 @@
                         </th>
 
                         <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">
-                            Editora
+                            Tombamento
                         </th>
 
                         <th class="px-6 py-4 text-center text-sm font-semibold text-slate-600">
@@ -92,7 +92,7 @@
                             </td>
 
                             <td class="px-6 py-4 text-sm text-slate-700">
-                                {{ $livro->editora }}
+                                {{ $livro->tombamento }}
                             </td>
 
                             <td class="px-6 py-4 text-center">

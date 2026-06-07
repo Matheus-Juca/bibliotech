@@ -61,6 +61,11 @@
                         Buscar
                     </button>
 
+                    <a href="{{ route('admin.cadaluno') }}" class="bg-blue-700 hover:bg-blue-800 text-white
+                               px-5 py-3 rounded-xl font-medium transition">
+                        Adicionar Aluno
+                    </a>
+
                 </form>
 
             </div>

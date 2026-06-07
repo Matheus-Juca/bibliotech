@@ -1,47 +1,106 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.guest')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('content')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+<div class="min-h-screen flex items-center justify-center bg-slate-50 px-4">
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+<div class="w-full max-w-md">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    <div class="text-center mb-8">
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <h1 class="text-4xl font-bold text-blue-900">
+            Bibliotech
+        </h1>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+        <p class="text-slate-500 mt-2">
+            Sistema de Biblioteca Escolar
+        </p>
+
+    </div>
+
+    <div class="bg-white shadow-lg rounded-2xl border border-slate-200 p-8">
+
+        <h2 class="text-2xl font-semibold text-slate-800 mb-6">
+            Entrar
+        </h2>
+
+        @if(session('status'))
+            <div class="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <div class="mb-5">
+
+                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    autofocus
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3
+                           focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+
+                @error('email')
+                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                @enderror
+
+            </div>
+
+            <div class="mb-6">
+
+                <label class="block text-sm font-semibold text-slate-700 mb-2">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3
+                           focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+
+                @error('password')
+                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                @enderror
+
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-blue-700 hover:bg-blue-800 text-white
+                       py-3 rounded-xl font-semibold transition"
+            >
+                Entrar
+            </button>
+
+            <div class="mt-6 text-center">
+
+                <a
+                    href="{{ route('register') }}"
+                    class="text-blue-700 hover:text-blue-800 text-sm"
+                >
+                    Criar conta
                 </a>
-            @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</div>
+
+@endsection

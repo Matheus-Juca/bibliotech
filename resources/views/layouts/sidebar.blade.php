@@ -88,20 +88,35 @@
             Empréstimos
         </a>
 
-        <a
-            href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition"
-        >
+        <a href="{{ route('admin.relatorio') }}"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-100 transition">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+
+                <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 17v-6m4 6V7m4 10V4M5 20h14"/>
+            </svg>
+
             Relatórios
         </a>
 
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
 
-        <a
-            href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-white hover:shadow-sm transition color-red-600"
+        <button
+            type="submit"
+            class="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-xl text-sm font-medium transition"
         >
             Sair
-        </a>
+        </button>
+
+    </form>
 
     </nav>
 
