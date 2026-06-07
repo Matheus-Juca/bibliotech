@@ -9,27 +9,37 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('emprestimos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('aluno_id')->constrained
-            ('alunos')->
-            onDelete('cascade');
+public function up(): void
+{
+    Schema::create('emprestimos', function (Blueprint $table) {
 
-            $table->foreignId('livro_id')->
-            constrained('livros')->
-            onDelete('cascade');
-                
-            $table->date('data_emprestimo');
-            $table->date('data_devolucao')->nullable();
-            $table->enum('status', ['emprestado', 'devolvido', 'atrasado'])
+        $table->id();
+
+        $table->foreignId('aluno_id')
+            ->constrained('alunos')
+            ->onDelete('cascade');
+
+        $table->foreignId('livro_id')
+            ->constrained('livros')
+            ->onDelete('cascade');
+
+        $table->date('data_emprestimo');
+
+        $table->date('data_devolucao')
+            ->nullable();
+
+        $table->string('status')
             ->default('emprestado');
-            $table->string('observacoes')->nullable();
-            $table->timestamps();
-        });
-    }
 
+        $table->string('observacoes')
+            ->nullable();
+
+        $table->string('motivo_nao_devolucao')
+            ->nullable();
+
+        $table->timestamps();
+    });
+}
     /**
      * Reverse the migrations.
      */
