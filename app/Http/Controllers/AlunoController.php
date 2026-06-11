@@ -15,8 +15,8 @@ public function index(Request $request)
 
     $alunos = Aluno::when($search, function ($query) use ($search) {
 
-        $query->where('nome', 'like', "%{$search}%")
-              ->orWhere('matricula', 'like', "%{$search}%");
+        $query->where('nome', 'ilike', "%{$search}%")
+              ->orWhere('matricula', 'ilike', "%{$search}%");
 
     })
     ->orderBy('nome')

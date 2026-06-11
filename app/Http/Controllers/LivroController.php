@@ -14,9 +14,8 @@ class LivroController extends Controller
 
         $livros = Livro::when($search, function ($query) use ($search) {
 
-            $query->where('titulo', 'like', "%{$search}%")
-                  ->orWhere('autor', 'like', "%{$search}%")
-                  ->orWhere('editora', 'like', "%{$search}%");
+            $query->where('titulo', 'ilike', "%{$search}%")
+                  ->orWhere('autor', 'ilike', "%{$search}%");
 
         })
         ->orderBy('titulo')
