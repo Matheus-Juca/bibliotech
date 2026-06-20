@@ -148,7 +148,21 @@
                     José de Alencar
                 </option>
 
+                <option value="outros">Outros</option>
+                
             </select>
+        <div id="autorCustomWrapper" class="hidden mt-3">
+
+            <input
+                type="text"
+                name="autor_custom"
+                id="autor_custom"
+                placeholder="Digite o nome do autor"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3
+                    focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+
+        </div>
 
         </div>
 
@@ -190,6 +204,7 @@
                 <option value="Cordel">Cordel</option>
                 <option value="Teatro">Teatro</option>
                 <option value="Poesia">Poesia</option>
+                <option value="outros">Outros</option>
 
             </select>
 
@@ -275,6 +290,29 @@
 
 <script>
 
+    
+    
+    const autorSelect = document.getElementById('autor');
+    const wrapper = document.getElementById('autorCustomWrapper');
+    const autorCustom = document.getElementById('autor_custom');
+    
+    autorSelect.addEventListener('change', function() {
+        
+        if (this.value === 'outros') {
+            
+            wrapper.classList.remove('hidden');
+            autorCustom.required = true;
+            
+        } else {
+            
+            wrapper.classList.add('hidden');
+            autorCustom.required = false;
+            autorCustom.value = '';
+            
+        }
+        
+    });
+    
 setTimeout(() => {
 
     const alert = document.getElementById('alertSuccess');
@@ -290,6 +328,7 @@ setTimeout(() => {
     }
 
 }, 4000);
+
 
 </script>
 

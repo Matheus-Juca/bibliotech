@@ -32,6 +32,19 @@ class LivroController extends Controller
 
     public function store(Request $request)
     {
+
+    $request->validate([
+    'titulo' => 'required|max:255',
+    'autor' => 'required',
+    'categoria' => 'required',
+    'tombamento' => 'required',
+    'quantidade' => 'required|integer|min:1',
+    'autor_custom' => $request->autor === 'outros'
+        ? 'required|max:255'
+        : 'nullable',
+        ]);
+
+
         $ultimoLivro = Livro::latest('id')->first();
 
         $proximoNumero = $ultimoLivro
@@ -48,7 +61,9 @@ class LivroController extends Controller
         Livro::create([
             'codigo' => $codigo,
             'titulo' => $request->titulo,
-            'autor' => $request->autor,
+            'autor' => $request->autor === 'outros'
+                ? $request->autor_custom
+                : $request->autor,
             'tombamento' => $request->tombamento,
             'categoria' => $request->categoria,
             'qtd_disponivel' => $request->quantidade,
@@ -69,14 +84,19 @@ class LivroController extends Controller
             $request->validate([
                 'titulo' => 'required|max:255',
                 'autor' => 'required',
-                'tombamento' => 'required',
                 'categoria' => 'required',
-                'quantidade' => 'required|integer|min:0'
+                'tombamento' => 'required',
+                'quantidade' => 'required|integer|min:1',
+                'autor_custom' => $request->autor === 'outros'
+                    ? 'required|max:255'
+                    : 'nullable',
             ]);
 
             $livro->update([
                 'titulo' => $request->titulo,
-                'autor' => $request->autor,
+                'autor' => $request->autor === 'outros'
+                    ? $request->autor_custom
+                    : $request->autor,
                 'tombamento' => $request->tombamento,
                 'categoria' => $request->categoria,
                 'qtd_disponivel' => $request->quantidade,

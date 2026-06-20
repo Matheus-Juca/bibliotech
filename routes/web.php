@@ -122,6 +122,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/cadaluno', [AlunoController::class, 'store'])
     ->name('alunos.store');
 
+    Route::get(
+    '/alunos/{aluno}/editar',
+    [AlunoController::class, 'edit']
+)->name('alunos.edit');
+
+
+    Route::delete(
+    '/alunos/{aluno}',
+    [AlunoController::class, 'destroy']
+)->name('alunos.destroy');
+
     /*
     |--------------------------------------------------------------------------
     | Empréstimos

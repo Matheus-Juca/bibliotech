@@ -13,8 +13,13 @@ class Aluno extends Model
         'qtd_fardas',
     ];
 
-    public function turma()
-{
-    return $this->belongsTo(Turma::class);
-}
+        public function turma()
+    {
+        return $this->belongsTo(Turma::class);
+    }
+
+    public function alunos()
+    {
+        return $this->hasMany(Aluno::class);
+    }
 }
