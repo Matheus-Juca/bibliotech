@@ -133,6 +133,11 @@ Route::middleware(['auth'])->group(function () {
     [AlunoController::class, 'destroy']
 )->name('alunos.destroy');
 
+Route::put(
+    '/alunos/{aluno}',
+    [AlunoController::class, 'update']
+)->name('alunos.update');
+
     /*
     |--------------------------------------------------------------------------
     | Empréstimos

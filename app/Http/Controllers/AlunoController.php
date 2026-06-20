@@ -1,4 +1,3 @@
-```php
 <?php
 
 namespace App\Http\Controllers;
@@ -9,36 +8,32 @@ use App\Models\Turma;
 
 class AlunoController extends Controller
 {
-    public function index(Request $request)
-    {
-        $search = $request->search;
+   public function index(Request $request)
+{
+    $search = $request->search;
 
-        $turmas = Turma::with([
-            'alunos' => function ($query) use ($search) {
+    $turmas = Turma::with([
+        'alunos' => function ($query) use ($search) {
 
-                if ($search) {
+            if ($search) {
 
-                    $query->where(function ($q) use ($search) {
+                $query->where(function ($q) use ($search) {
 
-                        $q->where('nome', 'ilike', "%{$search}%")
-                          ->orWhere('matricula', 'ilike', "%{$search}%");
+                    $q->where('nome', 'ilike', "%{$search}%")
+                      ->orWhere('matricula', 'ilike', "%{$search}%");
 
-                    });
-
-                }
-
-                $query->orderBy('nome');
+                });
 
             }
-        ])
-        ->orderByRaw("
-            CAST(REGEXP_REPLACE(nome, '[^0-9]', '', 'g') AS INTEGER),
-            REGEXP_REPLACE(nome, '[0-9]', '', 'g')
-        ")
-        ->get();
 
-        return view('admin.alunos', compact('turmas'));
-    }
+            $query->orderBy('nome');
+        }
+    ])
+    ->orderBy('codigo')
+    ->get();
+
+    return view('admin.alunos', compact('turmas'));
+}
 
     public function create()
     {
