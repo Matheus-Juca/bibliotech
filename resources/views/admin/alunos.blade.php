@@ -4,7 +4,7 @@
 
 <div class="max-w-7xl mx-auto">
 
-```
+
 {{-- Cabeçalho --}}
 <div class="mb-8">
 
@@ -40,32 +40,48 @@
         <form
             method="GET"
             action="{{ route('admin.alunos') }}"
-            class="flex gap-3"
+            class="flex gap-3 flex-wrap"
         >
 
+            {{-- Busca por aluno --}}
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Buscar nome ou matrícula..."
+                class="px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+
+            {{-- mantém turma selecionada --}}
             <input
                 type="hidden"
                 name="turma"
                 value="{{ $turmaSelecionada->id }}"
             >
 
-                <button
-                    type="submit"
-                    class="bg-blue-700 hover:bg-blue-800 text-white
-                           px-5 py-3 rounded-xl font-medium transition"
-                >
-                    Buscar
-                </button>
+            <button
+                type="submit"
+                class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 rounded-xl font-medium transition"
+            >
+                Buscar
+            </button>
 
-                <a
-                    href="{{ route('admin.cadaluno') }}"
-                    class="bg-green-600 hover:bg-green-700 text-white
-                           px-5 py-3 rounded-xl font-medium transition"
-                >
-                    Adicionar Aluno
-                </a>
+            <a
+                href="{{ route('admin.cadaluno') }}"
+                class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl font-medium transition"
+            >
+                Adicionar Aluno
+            </a>
 
-            </form>
+            {{-- botão limpar busca --}}
+            <a
+                href="{{ route('admin.alunos', ['turma' => $turmaSelecionada->id]) }}"
+                class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-3 rounded-xl font-medium transition"
+            >
+                Limpar
+            </a>
+
+        </form>
 
         </div>
 
@@ -220,7 +236,7 @@
     </div>
 
 </div>
-```
+
 
 </div>
 
