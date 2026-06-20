@@ -8,31 +8,39 @@ use App\Models\Turma;
 
 class AlunoController extends Controller
 {
-   public function index(Request $request)
+public function index(Request $request)
 {
     $search = $request->search;
 
-    $turmas = Turma::with([
-        'alunos' => function ($query) use ($search) {
+    $turmas = Turma::orderBy('codigo')->get();
 
-            if ($search) {
+    $turmaSelecionada = $request->filled('turma')
+        ? Turma::findOrFail($request->turma)
+        : $turmas->first();
 
-                $query->where(function ($q) use ($search) {
+    $alunos = Aluno::with('turma')
+        ->where('turma_id', $turmaSelecionada->id)
+        ->when($search, function ($query) use ($search) {
 
-                    $q->where('nome', 'ilike', "%{$search}%")
-                      ->orWhere('matricula', 'ilike', "%{$search}%");
+            $query->where(function ($q) use ($search) {
 
-                });
+                $q->where('nome', 'ilike', "%{$search}%")
+                  ->orWhere('matricula', 'ilike', "%{$search}%");
 
-            }
+            });
 
-            $query->orderBy('nome');
-        }
-    ])
-    ->orderBy('codigo')
-    ->get();
+        })
+        ->orderBy('nome')
+        ->get();
 
-    return view('admin.alunos', compact('turmas'));
+    return view(
+        'admin.alunos',
+        compact(
+            'turmas',
+            'turmaSelecionada',
+            'alunos'
+        )
+    );
 }
 
     public function create()
