@@ -18,34 +18,7 @@
 
 </div>
 
-{{-- Sucesso --}}
-@if(session('success'))
 
-<div
-    id="alertSuccess"
-    class="mb-6 bg-green-50 border border-green-200 text-green-700 px-5 py-4 rounded-xl flex items-center gap-3 shadow-sm"
->
-
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-5 h-5"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke="currentColor">
-
-        <path stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 13l4 4L19 7" />
-
-    </svg>
-
-    <span class="font-medium">
-        {{ session('success') }}
-    </span>
-
-</div>
-
-@endif
 
 {{-- Erros --}}
 @if($errors->any())
@@ -102,113 +75,172 @@
         </div>
 
         {{-- Autor --}}
-        <div>
+<div>
 
-            <label
-                for="autor"
-                class="block text-sm font-semibold text-slate-700 mb-2"
-            >
-                Autor
-            </label>
+    <label
+        for="autor"
+        class="block text-sm font-semibold text-slate-700 mb-2">
+        Autor
+    </label>
 
-            <select
-                id="autor"
-                name="autor"
-                required
-                class="w-full rounded-xl border border-slate-300 px-4 py-3
-                       focus:outline-none focus:ring-2 focus:ring-green-400
-                       focus:border-green-400 transition"
-            >
+    <select
+        id="autor"
+        name="autor"
+        required
+        class="w-full rounded-xl border border-slate-300 px-4 py-3
+               focus:outline-none focus:ring-2 focus:ring-green-400
+               focus:border-green-400 transition">
 
-                <option value="">
-                    Selecione um autor
-                </option>
+        <option value="">Selecione um autor</option>
 
-                <option value="Machado de Assis" {{ old('autor') == 'Machado de Assis' ? 'selected' : '' }}>
-                    Machado de Assis
-                </option>
+        <option value="Machado de Assis" {{ old('autor') == 'Machado de Assis' ? 'selected' : '' }}>
+            Machado de Assis
+        </option>
 
-                <option value="Clarice Lispector" {{ old('autor') == 'Clarice Lispector' ? 'selected' : '' }}>
-                    Clarice Lispector
-                </option>
+        <option value="Clarice Lispector" {{ old('autor') == 'Clarice Lispector' ? 'selected' : '' }}>
+            Clarice Lispector
+        </option>
 
-                <option value="Carlos Drummond de Andrade" {{ old('autor') == 'Carlos Drummond de Andrade' ? 'selected' : '' }}>
-                    Carlos Drummond de Andrade
-                </option>
+        <option value="Carlos Drummond de Andrade" {{ old('autor') == 'Carlos Drummond de Andrade' ? 'selected' : '' }}>
+            Carlos Drummond de Andrade
+        </option>
 
-                <option value="Jorge Amado" {{ old('autor') == 'Jorge Amado' ? 'selected' : '' }}>
-                    Jorge Amado
-                </option>
+        <option value="Jorge Amado" {{ old('autor') == 'Jorge Amado' ? 'selected' : '' }}>
+            Jorge Amado
+        </option>
 
-                <option value="João Guimarães Rosa" {{ old('autor') == 'João Guimarães Rosa' ? 'selected' : '' }}>
-                    João Guimarães Rosa
-                </option>
+        <option value="João Guimarães Rosa" {{ old('autor') == 'João Guimarães Rosa' ? 'selected' : '' }}>
+            João Guimarães Rosa
+        </option>
 
-                <option value="José de Alencar" {{ old('autor') == 'José de Alencar' ? 'selected' : '' }}>
-                    José de Alencar
-                </option>
+        <option value="José de Alencar" {{ old('autor') == 'José de Alencar' ? 'selected' : '' }}>
+            José de Alencar
+        </option>
 
-                <option value="outros">Outros</option>
-                
-            </select>
-        <div id="autorCustomWrapper" class="hidden mt-3">
+        <option value="outros" {{ old('autor') == 'outros' ? 'selected' : '' }}>
+            Outros
+        </option>
 
-            <input
-                type="text"
-                name="autor_custom"
-                id="autor_custom"
-                placeholder="Digite o nome do autor"
-                class="w-full rounded-xl border border-slate-300 px-4 py-3
-                    focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
+    </select>
 
-        </div>
+    <div
+        id="autorCustomWrapper"
+        class="{{ old('autor') == 'outros' ? '' : 'hidden' }} mt-3">
 
-        </div>
+        <input
+            type="text"
+            id="autor_custom"
+            name="autor_custom"
+            value="{{ old('autor_custom') }}"
+            placeholder="Digite o nome do autor"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3
+                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+    </div>
+
+</div>
 
         {{-- Categoria --}}
-        <div>
+<div>
 
-            <label
-                for="categoria"
-                class="block text-sm font-semibold text-slate-700 mb-2"
-            >
-                Categoria
-            </label>
+    <label
+        for="categoria"
+        class="block text-sm font-semibold text-slate-700 mb-2">
+        Categoria
+    </label>
 
-            <select
-                id="categoria"
-                name="categoria"
-                required
-                class="w-full rounded-xl border border-slate-300 px-4 py-3
-                       focus:outline-none focus:ring-2 focus:ring-green-400
-                       focus:border-green-400 transition"
-            >
+    <select
+        id="categoria"
+        name="categoria"
+        required
+        class="w-full rounded-xl border border-slate-300 px-4 py-3
+               focus:outline-none focus:ring-2 focus:ring-green-400
+               focus:border-green-400 transition">
 
-                <option value="">
-                    Selecione uma categoria
-                </option>
+        <option value="">Selecione uma categoria</option>
 
-                <option value="Literatura Brasileira">Literatura Brasileira</option>
-                <option value="Literatura Cearense">Literatura Cearense</option>
-                <option value="Literatura Africana">Literatura Africana</option>
-                <option value="Literatura Portuguesa">Literatura Portuguesa</option>
-                <option value="Literatura Estrangeira">Literatura Estrangeira</option>
-                <option value="Dicionários">Dicionários</option>
-                <option value="Infanto Juvenil">Infanto Juvenil</option>
-                <option value="História do Brasil">História do Brasil</option>
-                <option value="História do Ceará">História do Ceará</option>
-                <option value="Crônicas e Contos">Crônicas e Contos</option>
-                <option value="Romance">Romance</option>
-                <option value="Novela">Novela</option>
-                <option value="Cordel">Cordel</option>
-                <option value="Teatro">Teatro</option>
-                <option value="Poesia">Poesia</option>
-                <option value="outros">Outros</option>
+        <option value="Literatura Brasileira" {{ old('categoria') == 'Literatura Brasileira' ? 'selected' : '' }}>
+            Literatura Brasileira
+        </option>
 
-            </select>
+        <option value="Literatura Cearense" {{ old('categoria') == 'Literatura Cearense' ? 'selected' : '' }}>
+            Literatura Cearense
+        </option>
 
-        </div>
+        <option value="Literatura Africana" {{ old('categoria') == 'Literatura Africana' ? 'selected' : '' }}>
+            Literatura Africana
+        </option>
+
+        <option value="Literatura Portuguesa" {{ old('categoria') == 'Literatura Portuguesa' ? 'selected' : '' }}>
+            Literatura Portuguesa
+        </option>
+
+        <option value="Literatura Estrangeira" {{ old('categoria') == 'Literatura Estrangeira' ? 'selected' : '' }}>
+            Literatura Estrangeira
+        </option>
+
+        <option value="Dicionários" {{ old('categoria') == 'Dicionários' ? 'selected' : '' }}>
+            Dicionários
+        </option>
+
+        <option value="Infanto Juvenil" {{ old('categoria') == 'Infanto Juvenil' ? 'selected' : '' }}>
+            Infanto Juvenil
+        </option>
+
+        <option value="História do Brasil" {{ old('categoria') == 'História do Brasil' ? 'selected' : '' }}>
+            História do Brasil
+        </option>
+
+        <option value="História do Ceará" {{ old('categoria') == 'História do Ceará' ? 'selected' : '' }}>
+            História do Ceará
+        </option>
+
+        <option value="Crônicas e Contos" {{ old('categoria') == 'Crônicas e Contos' ? 'selected' : '' }}>
+            Crônicas e Contos
+        </option>
+
+        <option value="Romance" {{ old('categoria') == 'Romance' ? 'selected' : '' }}>
+            Romance
+        </option>
+
+        <option value="Novela" {{ old('categoria') == 'Novela' ? 'selected' : '' }}>
+            Novela
+        </option>
+
+        <option value="Cordel" {{ old('categoria') == 'Cordel' ? 'selected' : '' }}>
+            Cordel
+        </option>
+
+        <option value="Teatro" {{ old('categoria') == 'Teatro' ? 'selected' : '' }}>
+            Teatro
+        </option>
+
+        <option value="Poesia" {{ old('categoria') == 'Poesia' ? 'selected' : '' }}>
+            Poesia
+        </option>
+
+        <option value="outros" {{ old('categoria') == 'outros' ? 'selected' : '' }}>
+            Outros
+        </option>
+
+    </select>
+
+    <div
+        id="categoriaCustomWrapper"
+        class="{{ old('categoria') == 'outros' ? '' : 'hidden' }} mt-3">
+
+        <input
+            type="text"
+            id="categoria_custom"
+            name="categoria_custom"
+            value="{{ old('categoria_custom') }}"
+            placeholder="Digite a categoria"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3
+                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+    </div>
+
+</div>
 
         {{-- Data de Tombamento --}}
         <div>
@@ -286,52 +318,94 @@
 
 </div>
 
-@if(session('success'))
 
 <script>
 
-    
-    
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ======================
+    // Autor
+    // ======================
+
     const autorSelect = document.getElementById('autor');
-    const wrapper = document.getElementById('autorCustomWrapper');
-    const autorCustom = document.getElementById('autor_custom');
-    
-    autorSelect.addEventListener('change', function() {
-        
-        if (this.value === 'outros') {
-            
-            wrapper.classList.remove('hidden');
-            autorCustom.required = true;
-            
+    const autorWrapper = document.getElementById('autorCustomWrapper');
+    const autorInput = document.getElementById('autor_custom');
+
+    function atualizarAutor() {
+
+        if (autorSelect.value === 'outros') {
+
+            autorWrapper.classList.remove('hidden');
+            autorInput.required = true;
+
         } else {
-            
-            wrapper.classList.add('hidden');
-            autorCustom.required = false;
-            autorCustom.value = '';
-            
+
+            autorWrapper.classList.add('hidden');
+            autorInput.required = false;
+            autorInput.value = '';
+
         }
-        
-    });
-    
-setTimeout(() => {
+
+    }
+
+    autorSelect.addEventListener('change', atualizarAutor);
+    atualizarAutor();
+
+
+    // ======================
+    // Categoria
+    // ======================
+
+    const categoriaSelect = document.getElementById('categoria');
+    const categoriaWrapper = document.getElementById('categoriaCustomWrapper');
+    const categoriaInput = document.getElementById('categoria_custom');
+
+    function atualizarCategoria() {
+
+        if (categoriaSelect.value === 'outros') {
+
+            categoriaWrapper.classList.remove('hidden');
+            categoriaInput.required = true;
+
+        } else {
+
+            categoriaWrapper.classList.add('hidden');
+            categoriaInput.required = false;
+            categoriaInput.value = '';
+
+        }
+
+    }
+
+    categoriaSelect.addEventListener('change', atualizarCategoria);
+    atualizarCategoria();
+
+
+    // ======================
+    // Alerta de sucesso
+    // ======================
 
     const alert = document.getElementById('alertSuccess');
 
-    if(alert)
-    {
-        alert.style.transition = 'all .4s ease';
-        alert.style.opacity = '0';
+    if (alert) {
 
         setTimeout(() => {
-            alert.remove();
-        }, 400);
+
+            alert.style.transition = 'all .4s ease';
+            alert.style.opacity = '0';
+
+            setTimeout(() => {
+
+                alert.remove();
+
+            }, 400);
+
+        }, 4000);
+
     }
 
-}, 4000);
-
+});
 
 </script>
-
-@endif
 
 @endsection

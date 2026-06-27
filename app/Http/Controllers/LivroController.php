@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class LivroController extends Controller
 {
-
     public function index(Request $request)
     {
         $search = $request->search;
@@ -23,27 +22,53 @@ class LivroController extends Controller
 
         return view('admin.livros', compact('livros'));
     }
-    
+
     public function create()
     {
         return view('admin.cadLivro');
     }
 
-
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required|max:255',
 
-    $request->validate([
-    'titulo' => 'required|max:255',
-    'autor' => 'required',
-    'categoria' => 'required',
-    'tombamento' => 'required',
-    'quantidade' => 'required|integer|min:1',
-    'autor_custom' => $request->autor === 'outros'
-        ? 'required|max:255'
-        : 'nullable',
+            'autor' => 'required',
+            'autor_custom' => 'nullable|max:255',
+
+            'categoria' => 'required',
+            'categoria_custom' => 'nullable|max:255',
+
+            'tombamento' => 'required',
+
+            'quantidade' => 'required|integer|min:1',
         ]);
 
+        if ($request->autor == 'outros' && empty($request->autor_custom)) {
+
+            return back()
+                ->withErrors([
+                    'autor_custom' => 'Informe o autor.'
+                ])
+                ->withInput();
+
+        }
+
+        if ($request->categoria == 'outros' && empty($request->categoria_custom)) {
+
+            return back()
+                ->withErrors([
+                    'categoria_custom' => 'Informe a categoria.'
+                ])
+                ->withInput();
+
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Geração automática do código
+        |--------------------------------------------------------------------------
+        */
 
         $ultimoLivro = Livro::latest('id')->first();
 
@@ -59,53 +84,97 @@ class LivroController extends Controller
         );
 
         Livro::create([
+
             'codigo' => $codigo,
+
             'titulo' => $request->titulo,
-            'autor' => $request->autor === 'outros'
+
+            'autor' => $request->autor == 'outros'
                 ? $request->autor_custom
                 : $request->autor,
+
+            'categoria' => $request->categoria == 'outros'
+                ? $request->categoria_custom
+                : $request->categoria,
+
             'tombamento' => $request->tombamento,
-            'categoria' => $request->categoria,
+
             'qtd_disponivel' => $request->quantidade,
+
             'qtd_total' => $request->quantidade,
+
         ]);
 
         return redirect()
             ->route('admin.livros')
-            ->with('success', 'Livro cadastrado.');
+            ->with('success', 'Livro cadastrado com sucesso!');
     }
+
     public function edit(Livro $livro)
-        {
-            return view('admin.editLivro', compact('livro'));
-        }
+    {
+        return view('admin.editLivro', compact('livro'));
+    }
 
     public function update(Request $request, Livro $livro)
-        {
-            $request->validate([
-                'titulo' => 'required|max:255',
-                'autor' => 'required',
-                'categoria' => 'required',
-                'tombamento' => 'required',
-                'quantidade' => 'required|integer|min:1',
-                'autor_custom' => $request->autor === 'outros'
-                    ? 'required|max:255'
-                    : 'nullable',
-            ]);
+    {
+        $request->validate([
 
-            $livro->update([
-                'titulo' => $request->titulo,
-                'autor' => $request->autor === 'outros'
-                    ? $request->autor_custom
-                    : $request->autor,
-                'tombamento' => $request->tombamento,
-                'categoria' => $request->categoria,
-                'qtd_disponivel' => $request->quantidade,
-                'qtd_total' => $request->quantidade,
-            ]);
+            'titulo' => 'required|max:255',
 
-            return redirect()
-                ->route('admin.livros')
-                ->with('success', 'Livro atualizado com sucesso!');
+            'autor' => 'required',
+            'autor_custom' => 'nullable|max:255',
+
+            'categoria' => 'required',
+            'categoria_custom' => 'nullable|max:255',
+
+            'tombamento' => 'required',
+
+            'quantidade' => 'required|integer|min:1',
+
+        ]);
+
+        if ($request->autor == 'outros' && empty($request->autor_custom)) {
+
+            return back()
+                ->withErrors([
+                    'autor_custom' => 'Informe o autor.'
+                ])
+                ->withInput();
+
         }
 
+        if ($request->categoria == 'outros' && empty($request->categoria_custom)) {
+
+            return back()
+                ->withErrors([
+                    'categoria_custom' => 'Informe a categoria.'
+                ])
+                ->withInput();
+
+        }
+
+        $livro->update([
+
+            'titulo' => $request->titulo,
+
+            'autor' => $request->autor == 'outros'
+                ? $request->autor_custom
+                : $request->autor,
+
+            'categoria' => $request->categoria == 'outros'
+                ? $request->categoria_custom
+                : $request->categoria,
+
+            'tombamento' => $request->tombamento,
+
+            'qtd_disponivel' => $request->quantidade,
+
+            'qtd_total' => $request->quantidade,
+
+        ]);
+
+        return redirect()
+            ->route('admin.livros')
+            ->with('success', 'Livro atualizado com sucesso!');
+    }
 }
