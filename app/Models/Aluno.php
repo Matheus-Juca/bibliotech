@@ -11,6 +11,7 @@ class Aluno extends Model
         'matricula',
         'turma_id',
         'qtd_fardas',
+        'status'
     ];
 
         public function turma()

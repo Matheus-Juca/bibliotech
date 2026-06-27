@@ -76,6 +76,13 @@
         + Nova Turma
     </button>
 
+    <a
+    href="{{ route('alunos.promocao') }}"
+    class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl font-medium transition"
+>
+    Promover Ano Letivo
+    </a>
+
 </div>
 
 {{-- Tabela --}}

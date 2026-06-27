@@ -165,7 +165,29 @@ Route::put(
 */
 
 Route::resource('turmas', TurmaController::class);
+
 Route::get('/turmas', [TurmaController::class, 'index'])->name('admin.turmas');
+
+Route::post(
+    '/turmas/migrar',
+    [TurmaController::class, 'migrar']
+)->name('turmas.migrar');
+
+Route::get(
+    '/turmas/migrar',
+    [TurmaController::class, 'formMigracao']
+)->name('turmas.formMigracao');
+
+Route::get(
+    '/promocao-ano-letivo',
+    [AlunoController::class, 'promocao']
+)->name('alunos.promocao');
+
+Route::post(
+    '/promocao-ano-letivo',
+    [AlunoController::class, 'executarPromocao']
+)->name('alunos.promocao.executar');
+
 
 
 /*

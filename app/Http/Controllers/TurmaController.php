@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Turma;
+use App\Models\Aluno;
 
 class TurmaController extends Controller
 {
@@ -50,4 +51,40 @@ class TurmaController extends Controller
 
         return redirect()->back()->with('success', 'Turma removida com sucesso!');
     }
+
+    public function migrar(Request $request)
+{
+    $request->validate([
+        'origem_id' => 'required|exists:turmas,id',
+        'destino_id' => 'required|exists:turmas,id',
+    ]);
+
+    if ($request->origem_id == $request->destino_id) {
+
+        return back()->with(
+            'error',
+            'A turma de destino deve ser diferente.'
+        );
+    }
+
+    Aluno::where(
+        'turma_id',
+        $request->origem_id
+    )->update([
+        'turma_id' => $request->destino_id
+    ]);
+
+    return back()->with(
+        'success',
+        'Alunos migrados com sucesso!'
+    );
+
+}
+
+public function formMigracao()
+{
+    $turmas = Turma::orderBy('codigo')->get();
+
+    return view('admin.migrarAlunos', compact('turmas'));
+}
 }

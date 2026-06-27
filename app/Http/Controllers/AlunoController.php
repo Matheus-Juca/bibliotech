@@ -63,7 +63,8 @@ public function index(Request $request)
             'nome' => $request->nome,
             'matricula' => $request->matricula,
             'turma_id' => $request->turma_id,
-            'qtd_fardas' => $request->qtd_fardas
+            'qtd_fardas' => $request->qtd_fardas,
+            'status' => 'ativo'
         ]);
 
         return redirect()
@@ -110,5 +111,73 @@ public function index(Request $request)
             ->route('admin.alunos')
             ->with('success', 'Aluno removido com sucesso!');
     }
+
+    public function promocao()
+{
+    return view('admin.promocaoAnoLetivo');
+}
+
+public function executarPromocao()
+{
+    $alunos = Aluno::with('turma')
+        ->where('status', 'ativo')
+        ->get();
+
+    foreach ($alunos as $aluno) {
+
+        $codigo = strtoupper($aluno->turma->codigo);
+
+        // 1A -> 2A
+        if (str_starts_with($codigo, '1')) {
+
+            $novoCodigo = '2' . substr($codigo, 1);
+
+            $novaTurma = Turma::where(
+                'codigo',
+                $novoCodigo
+            )->first();
+
+            if ($novaTurma) {
+
+                $aluno->update([
+                    'turma_id' => $novaTurma->id
+                ]);
+            }
+        }
+
+        // 2A -> 3A
+        elseif (str_starts_with($codigo, '2')) {
+
+            $novoCodigo = '3' . substr($codigo, 1);
+
+            $novaTurma = Turma::where(
+                'codigo',
+                $novoCodigo
+            )->first();
+
+            if ($novaTurma) {
+
+                $aluno->update([
+                    'turma_id' => $novaTurma->id
+                ]);
+            }
+        }
+
+        // 3A -> Concluído
+        elseif (str_starts_with($codigo, '3')) {
+
+            $aluno->update([
+                'status' => 'concluido'
+            ]);
+        }
+    }
+
+    return redirect()
+        ->route('admin.alunos')
+        ->with(
+            'success',
+            'Promoção de ano letivo realizada com sucesso!'
+        );
+}
 }
 
